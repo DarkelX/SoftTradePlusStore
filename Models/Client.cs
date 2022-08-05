@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace SoftTradePlusStore.Models
         public string Name { get; set; }
         public ClientStatus Status { get; set; }
         public Manager Manager { get; set; }
-        public List<Product> Products { get; set; }
+        public ObservableCollection<BoughtProduct> Products { get; set; }
 
         public enum ClientStatus
         {
@@ -21,19 +22,22 @@ namespace SoftTradePlusStore.Models
             Key
         }
 
-        public Client() { }
+        public Client() 
+        {
+            Products = new ObservableCollection<BoughtProduct>();
+        }
+        public Client(bool newItem) : this()
+        {
+            if (newItem)
+                Id = -1;
+        }
 
-        public Client(string name, ClientStatus status, Manager manager, List<Product> products)
+        public Client(string name, ClientStatus status, Manager manager, ObservableCollection<BoughtProduct> products) : this()
         {
             Name = name;
             Status = status;
             Manager = manager;
             Products = products;
-        }
-
-        public void Buy(Product product)
-        {
-            Products?.Add(product);
         }
     }
 }

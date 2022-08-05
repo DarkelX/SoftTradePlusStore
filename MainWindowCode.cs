@@ -15,13 +15,23 @@ namespace SoftTradePlusStore
 {
     public partial class MainWindow
     {
-        public enum Models
+        private enum Models
         {
             Individual,
             Entity,
             Manager,
             Product
         }
+
+        public enum SortClientBy
+        {
+            All,
+            Manager,
+            Status
+        }
+
+        public List<SortClientBy> GetSortClientBy => Enum.GetValues<SortClientBy>().ToList();
+
         private List<Models> GetModels()
         {
             return Enum.GetValues<Models>().ToList();
@@ -83,11 +93,6 @@ namespace SoftTradePlusStore
             }
 
             dataManager.SaveChanges();
-        }
-
-        private void AddItem()
-        {
-
         }
     }
 }

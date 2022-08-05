@@ -1,5 +1,6 @@
 ﻿using SoftTradePlusStore.Base;
 using SoftTradePlusStore.Data;
+using SoftTradePlusStore.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SoftTradePlusStore.ViewModel
 {
@@ -32,18 +34,9 @@ namespace SoftTradePlusStore.ViewModel
         public MainViewModel()
         {
             Items = new ObservableCollection<object>();
-            Items.CollectionChanged += Items_CollectionChanged;
         }
 
-        private void Items_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(Items));
-            if(Items.Count > 0)
-            selectedItem = Items[0] as IHaveIdName;
-        }
-
-        public void Load(MainWindow.Models model)
+        internal void Load(DataManager.Models model)
         {
             Items.Clear();
 
@@ -55,26 +48,35 @@ namespace SoftTradePlusStore.ViewModel
             OnPropertyChanged(nameof(Items));
         }
 
-        public async Task SaveAsync()
+        internal void AddItem(DataManager.Models model)
         {
-            //await _customerDataProvider.SaveCustomersAsync(Customers);
+            IHaveIdName item = CreateItem(model);
+            Items.Add(item);
+            SelectedItem = item;
         }
 
-        public void AddCustomer()
+        private IHaveIdName CreateItem(DataManager.Models model)
         {
-            //var customer = new Customer { FirstName = "New" };
-            //Customers.Add(customer);
-            //SelectedCustomer = customer;
+            switch (model)
+            {
+                case DataManager.Models.Individual: return new Individual(true);
+                case DataManager.Models.Entity: return new Entity(true);
+                case DataManager.Models.Manager: return new Manager(true);
+                case DataManager.Models.Product: return new Product(true);
+                case DataManager.Models.BoughtProduct: return new BoughtProduct(true);
+                default: throw new Exception();
+            }
         }
 
-        public void DeleteCustomer()
+        public void DeleteItem()
         {
-            //var customer = SelectedCustomer;
-            //if (customer != null)
-            //{
-            //    Customers.Remove(customer);
-            //    SelectedCustomer = null;
-            //}
+            var item = SelectedItem;
+            if (item != null)
+            {
+                DataManager.GetInstance().DeleteItem(item);
+                Items.Remove(item);
+                SelectedItem = null;
+            }
         }
 
 
@@ -83,18 +85,21 @@ namespace SoftTradePlusStore.ViewModel
 
 
 
-        private ObservableCollection<object> UpdateModelList(MainWindow.Models models)
+        private ObservableCollection<IHaveIdName> UpdateModelList(DataManager.Models models)
         {
             var dataBase = DataManager.GetInstance();
 
             switch (models)
             {
-                case MainWindow.Models.Individual: return new ObservableCollection<object>(dataBase.Individuals.ToList());
-                case MainWindow.Models.Entity: return new ObservableCollection<object>(dataBase.Entities.ToList());
-                case MainWindow.Models.Manager: return new ObservableCollection<object>(dataBase.Managers.ToList());
-                case MainWindow.Models.Product: return new ObservableCollection<object>(dataBase.Products.ToList());
+                case DataManager.Models.Individual: return new ObservableCollection<IHaveIdName>(dataBase.Individuals);
+                case DataManager.Models.Entity: return new ObservableCollection<IHaveIdName>(dataBase.Entities);
+                case DataManager.Models.Manager: return new ObservableCollection<IHaveIdName>(dataBase.Managers);
+                case DataManager.Models.Product: return new ObservableCollection<IHaveIdName>(dataBase.Products);
+                case DataManager.Models.BoughtProduct: return new ObservableCollection<IHaveIdName>(dataBase.BoughtProducts);
                 default: throw new Exception();
             }
         }
+
+        
     }
 }

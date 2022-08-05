@@ -13,6 +13,11 @@ namespace SoftTradePlusStore.Models
         public string Name { get; set; }
 
         public Manager() { }
+        public Manager(bool newItem)
+        {
+            if (newItem)
+                Id = -1;
+        }
         public Manager(string name)
         {
             Name = name;

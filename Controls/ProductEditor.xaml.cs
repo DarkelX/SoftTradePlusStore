@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SoftTradePlusStore.Data;
 
 namespace SoftTradePlusStore.Controls
 {
@@ -43,6 +44,14 @@ namespace SoftTradePlusStore.Controls
         private static List<Product.SubscriptionTerm> GetTerms()
         {
             return Enum.GetValues<Product.SubscriptionTerm>().ToList();
+        }
+
+        private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox)sender; //TODO:Refactor
+            if(comboBox.SelectedValue == null) return;
+            var productType = Enum.Parse<Product.ProductType>(comboBox.SelectedValue.ToString());
+            TermBlock.Visibility = productType == Product.ProductType.Subscription ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

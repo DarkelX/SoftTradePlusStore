@@ -20,9 +20,6 @@ using SoftTradePlusStore.ViewModel;
 
 namespace SoftTradePlusStore
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
 
@@ -30,9 +27,9 @@ namespace SoftTradePlusStore
 
         public MainWindow()
         {
-            InitializeComponent();
-
             ViewModel = new MainViewModel();
+
+            InitializeComponent();
 
             Loaded += MainWindow_Loaded;
         }
@@ -45,48 +42,42 @@ namespace SoftTradePlusStore
 
         private void ComboBox_Model_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var combobox = (ComboBox) sender;
+            var combobox = (ComboBox)sender;
             var selectedItem = combobox.SelectedItem.ToString();
 
-            ViewModel.Load(Enum.Parse<Models>(selectedItem));
-
-            //Items.Clear();
-            //var items = UpdateModelList(Enum.Parse<Models>(selectedItem));
-            //foreach(var item in items)
-            //{
-            //    Items.Add(item); 
-            //    OnPropertyChanged(nameof(Items));
-            //}
-            //ModelList.ItemsSource = UpdateModelList(Enum.Parse<Models>(selectedItem));
+            ViewModel.Load(Enum.Parse<DataManager.Models>(selectedItem));
 
             Editor.Children.Clear();
             Editor.Children.Add(UpdateEditor(Enum.Parse<Models>(selectedItem)));
 
-            //SelectedItem = null;
+            UpdateSortByBlockVisible(Enum.Parse<Models>(selectedItem));
+        }
+
+        private void UpdateSortByBlockVisible(Models model)
+        {
+            SortByBlock.Visibility = model== Models.Entity || model == Models.Individual ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void ModelList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //var modelList = (ListView)sender;
-            //SelectedItem = modelList.SelectedItem;  
+            var modelList = (ListView)sender;
+            var editControl = (UserControl)Editor.Children[0];
 
-            //var editControl = (UserControl) Editor.Children[0];
+            editControl.DataContext = modelList.SelectedItem;
+        }
 
-            //editControl.DataContext = SelectedItem;
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var modelEnum = Enum.Parse<DataManager.Models>(ModelComboBox.SelectedItem.ToString());//TODO: Refactor
+            ViewModel.AddItem(modelEnum);
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            //var item = SelectedItem;
-            //if (item != null)
-            //{
-            //    DeleteItemFromDataBase(item);
-            //    //ModelList.Items.Remove(item);
-            //    SelectedItem = null;
-            //}
+            ViewModel.DeleteItem();
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void SortByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

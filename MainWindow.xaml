@@ -9,6 +9,8 @@
         Title="MainWindow"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.4*"/>
@@ -21,33 +23,38 @@
 
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Background="#E0E0E0" HorizontalAlignment="Center">
             <ComboBox x:Name="ModelComboBox" Width="120" Margin="5" SelectionChanged="ComboBox_Model_SelectionChanged"/>
-            <TextBlock Text="by" Margin="5"/>
-            <ComboBox Width="120" Margin="5"/>
-            <Button Content="Choose" Margin="5"/>
+            <StackPanel x:Name="SortByBlock" Orientation="Horizontal">
+                <TextBlock Text="by" Margin="5"/>
+                <ComboBox Width="120" Margin="5" SelectionChanged="SortByComboBox_SelectionChanged"
+                          ItemsSource="{Binding GetSortClientBy}" SelectedIndex="0"/>
+            </StackPanel>
         </StackPanel>
 
         <Grid Grid.Column="0" Grid.Row="1" Background="#CCCCCC">
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="AddButton" Margin="5" Content="Add" Height="20" Width="60" Click="AddButton_Click"/>
-                <Button x:Name="RemoveButton" Margin="5" Content="Remove" Height="20" Width="60" IsEnabled="{Binding ViewModel.IsItemSelected, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" Click="RemoveButton_Click"/>
+                <control:DefaultButton x:Name="AddButton" Margin="5" Content="Add" Click="AddButton_Click"/>
+                <control:DefaultButton x:Name="RemoveButton" Margin="5" Content="Remove"
+                        IsEnabled="{Binding ViewModel.IsItemSelected}"
+                        Click="RemoveButton_Click"/>
             </StackPanel>
 
-            <ListView Grid.Row="1" Background="#CCCCCC" SelectionChanged="ModelList_SelectionChanged" ItemsSource="{Binding ViewModel.Items, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <ListView Grid.Row="1" Background="#CCCCCC" SelectionChanged="ModelList_SelectionChanged"
+                      ItemsSource="{Binding ViewModel.Items}"
+                      SelectedItem="{Binding ViewModel.SelectedItem}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <TextBlock Text="Id:"/>
-                                <TextBlock Text="{Binding Id}"/>
-                            </StackPanel>
-                        </StackPanel>
+                        <control:Item/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

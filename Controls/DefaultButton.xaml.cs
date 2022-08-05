@@ -1,5 +1,4 @@
-﻿using SoftTradePlusStore.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +16,11 @@ using System.Windows.Shapes;
 namespace SoftTradePlusStore.Controls
 {
     /// <summary>
-    /// Interaction logic for ManagerEditor.xaml
+    /// Interaction logic for DefaultButton.xaml
     /// </summary>
-    public partial class ManagerEditor : UserControl
+    public partial class DefaultButton : Button
     {
-        public ManagerEditor()
+        public DefaultButton()
         {
             InitializeComponent();
         }
