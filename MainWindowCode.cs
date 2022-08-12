@@ -25,7 +25,7 @@ namespace SoftTradePlusStore
 
         public enum SortClientBy
         {
-            All,
+            Name,
             Manager,
             Status
         }
@@ -93,6 +93,19 @@ namespace SoftTradePlusStore
             }
 
             dataManager.SaveChanges();
+        }
+
+        private List<SortDescription> GetSortDescriptions()
+        {
+            var sortDescriptions = new List<SortDescription>
+            {
+                new SortDescription("Name", ListSortDirection.Ascending),
+                new SortDescription("Manager.Name", ListSortDirection.Ascending),
+                new SortDescription("Status", ListSortDirection.Ascending)
+            };
+            sortDescriptions.Add(new SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
+
+            return sortDescriptions;
         }
     }
 }

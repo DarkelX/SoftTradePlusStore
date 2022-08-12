@@ -25,8 +25,8 @@
             <ComboBox x:Name="ModelComboBox" Width="120" Margin="5" SelectionChanged="ComboBox_Model_SelectionChanged"/>
             <StackPanel x:Name="SortByBlock" Orientation="Horizontal">
                 <TextBlock Text="by" Margin="5"/>
-                <ComboBox Width="120" Margin="5" SelectionChanged="SortByComboBox_SelectionChanged"
-                          ItemsSource="{Binding GetSortClientBy}" SelectedIndex="0"/>
+                <ComboBox x:Name="SortByComboBox" Width="120" Margin="5" SelectionChanged="SortByComboBox_SelectionChanged"
+                          ItemsSource="{Binding GetSortClientBy}"/>
             </StackPanel>
         </StackPanel>
 
@@ -44,7 +44,7 @@
                         Click="RemoveButton_Click"/>
             </StackPanel>
 
-            <ListView Grid.Row="1" Background="#CCCCCC" SelectionChanged="ModelList_SelectionChanged"
+            <ListView x:Name="ItemsList" Grid.Row="1" Background="#CCCCCC" SelectionChanged="ModelList_SelectionChanged"
                       ItemsSource="{Binding ViewModel.Items}"
                       SelectedItem="{Binding ViewModel.SelectedItem}">
                 <ListView.ItemContainerStyle>
