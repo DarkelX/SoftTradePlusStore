@@ -6,11 +6,10 @@
              xmlns:local="clr-namespace:SoftTradePlusStore.Controls"
              xmlns:main="clr-namespace:SoftTradePlusStore"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             DataContext = "{Binding Source={x:Static Application.Current}, Path=MainWindow}">
+             d:DesignHeight="450" d:DesignWidth="800">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
         <local:DefaultButton Content="Cancel" Margin="5" Click="ButtonCancel_Click"/>
-        <local:DefaultButton Content="Save" Margin="5" Click="ButtonSave_Click" IsEnabled="{Binding ViewModel.IsItemSelected}"/>
+        <local:DefaultButton Content="Save" Margin="5" Click="ButtonSave_Click"/>
     </StackPanel>
 </UserControl>

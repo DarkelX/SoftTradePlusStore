@@ -39,19 +39,19 @@ namespace SoftTradePlusStore
             return Enum.GetValues<Models>().ToList();
         }
 
-        private ObservableCollection<object> UpdateModelList(Models models)
-        {
-            var dataBase = DataManager.GetInstance();
+        //private ObservableCollection<object> UpdateModelList(Models models)
+        //{
+        //    var dataBase = DataManager.GetInstance();
 
-            switch (models)
-            {
-                case Models.Individual: return new ObservableCollection<object>(dataBase.Individuals.ToList());
-                case Models.Entity: return new ObservableCollection<object>(dataBase.Entities.ToList());
-                case Models.Manager: return new ObservableCollection<object>(dataBase.Managers.ToList());
-                case Models.Product: return new ObservableCollection<object>(dataBase.Products.ToList());
-                default: throw new Exception();
-            }
-        }
+        //    switch (models)
+        //    {
+        //        case Models.Individual: return new ObservableCollection<object>(dataBase.Individuals.ToList());
+        //        case Models.Entity: return new ObservableCollection<object>(dataBase.Entities.ToList());
+        //        case Models.Manager: return new ObservableCollection<object>(dataBase.Managers.ToList());
+        //        case Models.Product: return new ObservableCollection<object>(dataBase.Products.ToList());
+        //        default: throw new Exception();
+        //    }
+        //}
 
         private UIElement UpdateEditor(Models models)
         {
@@ -70,44 +70,79 @@ namespace SoftTradePlusStore
             }
         }
 
-        private void DeleteItemFromDataBase(object item)
+        //private void DeleteItemFromDataBase(object item)
+        //{
+        //    var dataManager = DataManager.GetInstance();
+
+        //    var type = item.GetType().Name;
+        //    var enumModel = Enum.Parse<Models>(type);
+
+        //    switch (enumModel)
+        //    {
+        //        case Models.Individual:
+        //            dataManager.Individuals.Remove(item as Individual);
+        //            break;
+        //        case Models.Entity:
+        //            dataManager.Entities.Remove(item as Entity);
+        //            break;
+        //        case Models.Manager:
+        //            dataManager.Managers.Remove(item as Manager);
+        //            break;
+        //        case Models.Product:
+        //            dataManager.Products.Remove(item as Product);
+        //            break;
+        //        default: throw new Exception();
+        //    }
+
+        //    dataManager.SaveChanges();
+        //}
+
+        //private List<SortDescription> GetSortDescriptions()
+        //{
+        //    var sortDescriptions = new List<SortDescription>
+        //    {
+        //        new SortDescription("Name", ListSortDirection.Ascending),
+        //        new SortDescription("Manager.Name", ListSortDirection.Ascending),
+        //        new SortDescription("Status", ListSortDirection.Ascending)
+        //    };
+        //    sortDescriptions.Add(new SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
+
+        //    return sortDescriptions;
+        //}
+
+        private void UpdateEditorVisibility()
         {
-            var dataManager = DataManager.GetInstance();
-
-            var type = item.GetType().Name;
-            var enumModel = Enum.Parse<Models>(type);
-
-            switch (enumModel)
-            {
-                case Models.Individual:
-                    dataManager.Individuals.Remove(item as Individual);
-                    break;
-                case Models.Entity:
-                    dataManager.Entities.Remove(item as Entity);
-                    break;
-                case Models.Manager:
-                    dataManager.Managers.Remove(item as Manager);
-                    break;
-                case Models.Product:
-                    dataManager.Products.Remove(item as Product);
-                    break;
-                default: throw new Exception();
-            }
-
-            dataManager.SaveChanges();
+            Editor.Visibility = ViewModel.IsItemSelected ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private List<SortDescription> GetSortDescriptions()
+        private void UpdateSortByBlockVisible(Models model)
         {
-            var sortDescriptions = new List<SortDescription>
-            {
-                new SortDescription("Name", ListSortDirection.Ascending),
-                new SortDescription("Manager.Name", ListSortDirection.Ascending),
-                new SortDescription("Status", ListSortDirection.Ascending)
-            };
-            sortDescriptions.Add(new SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
+            SortByBlock.Visibility = model == Models.Entity || model == Models.Individual ? Visibility.Visible : Visibility.Collapsed;
+        }
 
-            return sortDescriptions;
+        private void SortItems(SortClientBy sortClientByEnum)
+        {
+            if (ItemsList.Items.SortDescriptions.Count == 0)
+                ItemsList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+
+            SortDescription newSortDescription;
+            switch (sortClientByEnum)
+            {
+                case SortClientBy.Name:
+                    newSortDescription = new SortDescription("Name", ListSortDirection.Ascending);
+                    break;
+                case SortClientBy.Status:
+                    newSortDescription = new SortDescription("Status", ListSortDirection.Ascending);
+                    break;
+                case SortClientBy.Manager:
+                    newSortDescription = new SortDescription("Manager.Name", ListSortDirection.Ascending);
+                    break;
+                default:
+                    newSortDescription = new SortDescription();
+                    break;
+            }
+
+            ItemsList.Items.SortDescriptions[ItemsList.Items.SortDescriptions.Count - 1] = newSortDescription;
         }
     }
 }

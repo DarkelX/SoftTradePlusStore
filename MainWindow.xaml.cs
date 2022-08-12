@@ -23,7 +23,6 @@ namespace SoftTradePlusStore
 {
     public partial class MainWindow : Window
     {
-
         public MainViewModel ViewModel { get; }
 
         public MainWindow()
@@ -50,15 +49,11 @@ namespace SoftTradePlusStore
 
             Editor.Children.Clear();
             Editor.Children.Add(UpdateEditor(Enum.Parse<Models>(selectedItem)));
+            UpdateEditorVisibility();
 
             UpdateSortByBlockVisible(Enum.Parse<Models>(selectedItem));
 
             SortByComboBox.SelectedIndex = 0;
-        }
-
-        private void UpdateSortByBlockVisible(Models model)
-        {
-            SortByBlock.Visibility = model== Models.Entity || model == Models.Individual ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void ModelList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -66,6 +61,7 @@ namespace SoftTradePlusStore
             var modelList = (ListView)sender;
             var editControl = (UserControl)Editor.Children[0];
 
+            UpdateEditorVisibility();
             editControl.DataContext = modelList.SelectedItem;
         }
 
@@ -86,31 +82,6 @@ namespace SoftTradePlusStore
             var sortClientByEnum = Enum.Parse<SortClientBy>(comboBox.SelectedValue.ToString());
 
             SortItems(sortClientByEnum);
-        }
-
-        private void SortItems(SortClientBy sortClientByEnum)
-        {
-            if (ItemsList.Items.SortDescriptions.Count == 0)
-                ItemsList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-
-            SortDescription newSortDescription;
-            switch (sortClientByEnum)
-            {
-                case SortClientBy.Name:
-                    newSortDescription = new SortDescription("Name", ListSortDirection.Ascending);
-                    break;
-                case SortClientBy.Status:
-                    newSortDescription = new SortDescription("Status", ListSortDirection.Ascending);
-                    break;
-                case SortClientBy.Manager:
-                    newSortDescription = new SortDescription("Manager.Name", ListSortDirection.Ascending);
-                    break;
-                default:
-                    newSortDescription = new SortDescription();
-                    break;
-            }
-
-            ItemsList.Items.SortDescriptions[ItemsList.Items.SortDescriptions.Count - 1] = newSortDescription;
         }
     }
 }
