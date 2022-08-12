@@ -32,6 +32,11 @@ namespace SoftTradePlusStore.Controls
             StatusBlock.Visibility = !string.IsNullOrEmpty(StatusText.Text) ? Visibility.Visible : Visibility.Collapsed;
             ManagerBlock.Visibility = !string.IsNullOrEmpty(ManagerText.Text) ? Visibility.Visible : Visibility.Collapsed;
             IndividualBlock.Visibility = !string.IsNullOrEmpty(IndividualText.Text) ? Visibility.Visible : Visibility.Collapsed;
+
+            if (string.IsNullOrEmpty(CountText.Text))
+                CountBlock.Visibility = Visibility.Collapsed;
+            else
+                IdBlock.Visibility = Visibility.Collapsed;
         }
     }
 }

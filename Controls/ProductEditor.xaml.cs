@@ -53,5 +53,56 @@ namespace SoftTradePlusStore.Controls
             var productType = Enum.Parse<Product.ProductType>(comboBox.SelectedValue.ToString());
             TermBlock.Visibility = productType == Product.ProductType.Subscription ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        private void ShowHideClientsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (DefaultButton)sender;
+            var thisProduct = (Product)button.DataContext;
+            var nameOfProduct = thisProduct.Name;
+            var clients = GetClientsWhoBoughtItem(nameOfProduct);
+            ClientsWhoBoughtItem.Items.Clear();//TODO:Refactor
+
+            foreach (var client in clients)
+                ClientsWhoBoughtItem.Items.Add(client);
+        }
+
+        private List<ClientsWithCount> GetClientsWhoBoughtItem(string name)//TODO:Refactor
+        {
+            var dataBase = DataManager.GetInstance();
+
+            var clients = new List<ClientsWithCount>();
+
+            foreach(var client in dataBase.Individuals)
+            {
+                foreach(var product in client.Products)
+                {
+                    if (product.Name == name)
+                    {
+                        var a = clients.FirstOrDefault(x => x.Name == client.Name);
+                        if (a != null)
+                            a.IncreaseCount();
+                        else
+                            clients.Add(new ClientsWithCount(client));
+                    }
+                } 
+            }
+
+            foreach (var client in dataBase.Entities)
+            {
+                foreach (var product in client.Products)
+                {
+                    if (product.Name == name)
+                    {
+                        var a = clients.FirstOrDefault(x => x.Name == name);
+                        if (a != null)
+                            a.IncreaseCount();
+                        else
+                            clients.Add(new ClientsWithCount(client));
+                    }
+                }
+            }
+
+            return clients;
+        }
     }
 }
