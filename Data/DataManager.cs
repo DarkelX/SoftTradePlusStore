@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using SoftTradePlusStore.Models;
+using SoftTradePlusStore.Models.Clients;
+using SoftTradePlusStore.Models.Products;
 
 namespace SoftTradePlusStore.Data
 {

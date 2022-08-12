@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="SoftTradePlusStore.Controls.ClientEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SoftTradePlusStore.Controls"
+             xmlns:clients="clr-namespace:SoftTradePlusStore.Models.Clients"
+             xmlns:main="clr-namespace:SoftTradePlusStore"
+             xmlns:data="clr-namespace:SoftTradePlusStore.Data"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <clients:Entity/>
+    </UserControl.DataContext>
+
+    <StackPanel>
+        <StackPanel Margin="5 10 0 10">
+            <TextBlock Text="Name" Margin="0 0 0 5"/>
+            <TextBox Text="{Binding Name}"/>
+        </StackPanel>
+
+
+        <StackPanel Orientation="Horizontal" Margin="5 10 0 10">
+            <TextBlock Text="Status" Margin="0 0 5 0"/>
+            <ComboBox x:Name="StatusComboBox" SelectedValue="{Binding Status}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5 10 0 10">
+            <TextBlock Text="Manager" Margin="0 0 5 0"/>
+            <local:ComboBoxForModel x:Name="ManagerComboBox" SelectedItem="{Binding Manager}"/>
+        </StackPanel>
+
+        <StackPanel x:Name="IndividualPanel" Orientation="Horizontal" Margin="5 10 0 10">
+            <TextBlock Text="Individual" Margin="0 0 5 0"/>
+            <local:ComboBoxForModel x:Name="IndividualComboBox" SelectedItem="{Binding Individual}"/>
+        </StackPanel>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <local:ComboBoxForModel x:Name="ProductsComboBox"/>
+                <Button x:Name="AddButton" Margin="5" Content="Add" Height="20" Width="60" Click="AddButton_Click"/>
+                <Button x:Name="RemoveButton" Margin="5" Content="Remove" Height="20" Width="60"/>
+            </StackPanel>
+
+            <local:HorizontalStretchListView x:Name="ProductList" Grid.Row="1"
+                                             SelectionChanged="ProductList_SelectionChanged"
+                                             ItemsSource="{Binding Products}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:PurchasedItem/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </local:HorizontalStretchListView>
+        </Grid>
+
+        <local:SaveAndCancelButtons/>
+
+    </StackPanel>
+</UserControl>

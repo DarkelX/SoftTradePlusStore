@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using SoftTradePlusStore.Models;
 using System.Collections.ObjectModel;
+using SoftTradePlusStore.Models.Clients;
+using SoftTradePlusStore.Models.Products;
 
 namespace SoftTradePlusStore
 {

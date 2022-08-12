@@ -5,8 +5,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SoftTradePlusStore.Models.Products;
 
-namespace SoftTradePlusStore.Models
+namespace SoftTradePlusStore.Models.Clients
 {
     internal abstract class Client : IHaveIdName
     {
@@ -18,11 +19,11 @@ namespace SoftTradePlusStore.Models
 
         public enum ClientStatus
         {
-            Regular,
-            Key
+            Key,
+            Regular
         }
 
-        public Client() 
+        public Client()
         {
             Products = new ObservableCollection<BoughtProduct>();
         }

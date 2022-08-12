@@ -1,5 +1,4 @@
 ﻿using System;
-using SoftTradePlusStore.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SoftTradePlusStore.Data;
+using SoftTradePlusStore.Models.Clients;
+using SoftTradePlusStore.Models.Products;
 
 namespace SoftTradePlusStore.Controls
 {

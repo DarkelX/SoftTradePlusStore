@@ -1,6 +1,8 @@
 ﻿using SoftTradePlusStore.Base;
 using SoftTradePlusStore.Data;
 using SoftTradePlusStore.Models;
+using SoftTradePlusStore.Models.Clients;
+using SoftTradePlusStore.Models.Products;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoftTradePlusStore.Models
+namespace SoftTradePlusStore.Models.Clients
 {
     internal class ClientsWithCount : Client
     {
