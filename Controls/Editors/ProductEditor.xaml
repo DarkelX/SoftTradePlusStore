@@ -10,13 +10,15 @@
     <StackPanel>
         <StackPanel Margin="5 10 0 10">
             <TextBlock Text="Name" Margin="0 0 0 5"/>
-            <TextBox Text="{Binding Name}"/>
+            <TextBox x:Name="NameField" Text="{Binding Name}"/>
+            <local:RequiredFieldText x:Name="RequiredName"/>
         </StackPanel>
 
 
         <StackPanel Margin="5 10 0 10">
             <TextBlock Text="Price" Margin="0 0 0 5"/>
-            <TextBox Text="{Binding Price, StringFormat='$#,##0.00;$(#,##0.00)'}"/>
+            <TextBox x:Name="PriceField" Text="{Binding Price, StringFormat='$#,##0.00;$(#,##0.00)'}" TextChanged="PriceField_TextChanged"/>
+            <local:RequiredFieldText x:Name="RequiredPrice"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="5 10 0 10">
@@ -31,7 +33,7 @@
 
         <local:DefaultButton x:Name="ShowHideClientsButton" Click="ShowHideClientsButton_Click"/>
         
-        <ListView x:Name="ClientsWhoBoughtItem">
+        <ListView x:Name="ClientsWhoBoughtItem" DataContextChanged="ClientsWhoBoughtItem_DataContextChanged">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -44,7 +46,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <local:SaveAndCancelButtons/>
+        <local:SaveAndCancelButtons SaveButtonClicked="SaveAndCancelButtons_SaveButtonClicked"/>
 
     </StackPanel>
 </UserControl>

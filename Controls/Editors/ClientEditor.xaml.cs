@@ -44,7 +44,6 @@ namespace SoftTradePlusStore.Controls
                 AddButton.IsEnabled = true;
             }
             else AddButton.IsEnabled = false;
-
         }
 
         private static List<Client.ClientStatus> GetStatuses()
@@ -72,6 +71,28 @@ namespace SoftTradePlusStore.Controls
 
             var viewModel = (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.ViewModel;
             ((Client)viewModel?.SelectedItem).Products.Add(boughtProduct);
+        }
+
+        private void ProductList_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is not Client client)
+                return;
+
+            ProductList.Visibility = client.Products.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void SaveAndCancelButtons_SaveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is not SaveAndCancelButtons saveAndCancelButtons)
+                return;
+
+            if (string.IsNullOrEmpty(NameField.Text))
+                RequiredName.Show();
+            else
+            {
+                RequiredName.Hide();
+                saveAndCancelButtons.SaveShanges();
+            }
         }
     }
 }

@@ -17,7 +17,8 @@
     <StackPanel>
         <StackPanel Margin="5 10 0 10">
             <TextBlock Text="Name" Margin="0 0 0 5"/>
-            <TextBox Text="{Binding Name}"/>
+            <TextBox x:Name="NameField" Text="{Binding Name}"/>
+            <local:RequiredFieldText x:Name="RequiredName"/>
         </StackPanel>
 
 
@@ -50,7 +51,8 @@
 
             <local:HorizontalStretchListView x:Name="ProductList" Grid.Row="1"
                                              SelectionChanged="ProductList_SelectionChanged"
-                                             ItemsSource="{Binding Products}">
+                                             ItemsSource="{Binding Products}"
+                                             DataContextChanged="ProductList_DataContextChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:PurchasedItem/>
@@ -59,7 +61,7 @@
             </local:HorizontalStretchListView>
         </Grid>
 
-        <local:SaveAndCancelButtons/>
+        <local:SaveAndCancelButtons SaveButtonClicked="SaveAndCancelButtons_SaveButtonClicked"/>
 
     </StackPanel>
 </UserControl>

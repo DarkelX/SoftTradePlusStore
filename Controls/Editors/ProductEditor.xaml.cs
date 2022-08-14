@@ -105,5 +105,39 @@ namespace SoftTradePlusStore.Controls
 
             return clients;
         }
+
+        private void ClientsWhoBoughtItem_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is not Product product) //TODO
+                return;
+
+            //ClientsWhoBoughtItem.Visibility = client.Products.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void SaveAndCancelButtons_SaveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is not SaveAndCancelButtons saveAndCancelButtons)
+                return;
+
+            if(string.IsNullOrEmpty(NameField.Text) || string.IsNullOrEmpty(PriceField.Text))
+            {
+                if (string.IsNullOrEmpty(NameField.Text))
+                    RequiredName.Show();
+
+                if (string.IsNullOrEmpty(PriceField.Text))
+                    RequiredPrice.Show();
+            }
+            else
+            {
+                RequiredName.Hide();
+                RequiredPrice.Hide();
+                saveAndCancelButtons.SaveShanges();
+            }
+        }
+
+        private void PriceField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -18,11 +18,17 @@ namespace SoftTradePlusStore.Controls
 {
     public partial class SaveAndCancelButtons : UserControl
     {
+        public event RoutedEventHandler SaveButtonClicked;
         public SaveAndCancelButtons()
         {
             InitializeComponent();
         }
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveButtonClicked?.Invoke(this, e);
+        }
+
+        public void SaveShanges()
         {
             var dataBase = DataManager.GetInstance();
 
@@ -40,6 +46,8 @@ namespace SoftTradePlusStore.Controls
                 dataBase.CreateItem(selectedItem);
                 viewModel.Refresh();
             }
+
+            SavedSuccessfullyText.Visibility = Visibility.Visible;
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)

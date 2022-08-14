@@ -25,5 +25,19 @@ namespace SoftTradePlusStore.Controls
         {
             InitializeComponent();
         }
+
+        private void SaveAndCancelButtons_SaveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is not SaveAndCancelButtons saveAndCancelButtons)
+                return;
+
+            if (string.IsNullOrEmpty(NameField.Text))
+                RequiredName.Show();
+            else
+            {
+                RequiredName.Hide();
+                saveAndCancelButtons.SaveShanges();
+            }
+        }
     }
 }

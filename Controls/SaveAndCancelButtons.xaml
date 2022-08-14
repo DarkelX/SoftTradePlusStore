@@ -8,8 +8,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-        <local:DefaultButton Content="Cancel" Margin="5" Click="ButtonCancel_Click"/>
-        <local:DefaultButton Content="Save" Margin="5" Click="ButtonSave_Click"/>
-    </StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock x:Name="SavedSuccessfullyText" Text="Saved successfully" Foreground="Green" Visibility="Collapsed" Margin="5 0 0 0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <local:DefaultButton Content="Cancel" Margin="5" Click="ButtonCancel_Click"/>
+            <local:DefaultButton Content="Save" Margin="5" Click="ButtonSave_Click"/>
+        </StackPanel>
+    </Grid>
+    
+    
 </UserControl>
