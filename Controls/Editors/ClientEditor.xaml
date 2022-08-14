@@ -44,8 +44,8 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:ComboBoxForModel x:Name="ProductsComboBox"/>
-                <Button x:Name="AddButton" Margin="5" Content="Add" Height="20" Width="60" Click="AddButton_Click"/>
-                <Button x:Name="RemoveButton" Margin="5" Content="Remove" Height="20" Width="60"/>
+                <local:DefaultButton x:Name="AddButton" Margin="5" Content="Add" Height="20" Width="60" Click="AddButton_Click"/>
+                <local:DefaultButton x:Name="RemoveButton" Margin="5" Content="Remove" Height="20" Width="60"/>
             </StackPanel>
 
             <local:HorizontalStretchListView x:Name="ProductList" Grid.Row="1"

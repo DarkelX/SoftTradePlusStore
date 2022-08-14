@@ -12,6 +12,7 @@ using SoftTradePlusStore.Models;
 using System.Collections.ObjectModel;
 using SoftTradePlusStore.Models.Clients;
 using SoftTradePlusStore.Models.Products;
+using System.Windows.Controls;
 
 namespace SoftTradePlusStore
 {
@@ -39,21 +40,7 @@ namespace SoftTradePlusStore
             return Enum.GetValues<Models>().ToList();
         }
 
-        //private ObservableCollection<object> UpdateModelList(Models models)
-        //{
-        //    var dataBase = DataManager.GetInstance();
-
-        //    switch (models)
-        //    {
-        //        case Models.Individual: return new ObservableCollection<object>(dataBase.Individuals.ToList());
-        //        case Models.Entity: return new ObservableCollection<object>(dataBase.Entities.ToList());
-        //        case Models.Manager: return new ObservableCollection<object>(dataBase.Managers.ToList());
-        //        case Models.Product: return new ObservableCollection<object>(dataBase.Products.ToList());
-        //        default: throw new Exception();
-        //    }
-        //}
-
-        private UIElement UpdateEditor(Models models)
+        private UIElement GetEditor(Models models)
         {
             switch (models)
             {
@@ -70,45 +57,25 @@ namespace SoftTradePlusStore
             }
         }
 
-        //private void DeleteItemFromDataBase(object item)
-        //{
-        //    var dataManager = DataManager.GetInstance();
+        public void UpdateEditor()
+        {
+            var selectedItem = ModelComboBox.SelectedItem.ToString();
+            var modelEnum = Enum.Parse<Models>(selectedItem);
 
-        //    var type = item.GetType().Name;
-        //    var enumModel = Enum.Parse<Models>(type);
+            Editor.Children.Clear();
+            Editor.Children.Add(GetEditor(modelEnum));
+            UpdateEditorVisibility();
 
-        //    switch (enumModel)
-        //    {
-        //        case Models.Individual:
-        //            dataManager.Individuals.Remove(item as Individual);
-        //            break;
-        //        case Models.Entity:
-        //            dataManager.Entities.Remove(item as Entity);
-        //            break;
-        //        case Models.Manager:
-        //            dataManager.Managers.Remove(item as Manager);
-        //            break;
-        //        case Models.Product:
-        //            dataManager.Products.Remove(item as Product);
-        //            break;
-        //        default: throw new Exception();
-        //    }
+            UpdateSortByBlockVisible(modelEnum);
 
-        //    dataManager.SaveChanges();
-        //}
+            SortByComboBox.SelectedIndex = 0;
 
-        //private List<SortDescription> GetSortDescriptions()
-        //{
-        //    var sortDescriptions = new List<SortDescription>
-        //    {
-        //        new SortDescription("Name", ListSortDirection.Ascending),
-        //        new SortDescription("Manager.Name", ListSortDirection.Ascending),
-        //        new SortDescription("Status", ListSortDirection.Ascending)
-        //    };
-        //    sortDescriptions.Add(new SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
-
-        //    return sortDescriptions;
-        //}
+            if (ViewModel.IsItemSelected)
+            {
+                var editControl = (UserControl)Editor.Children[0];
+                editControl.DataContext = ViewModel.SelectedItem;
+            }
+        }
 
         private void UpdateEditorVisibility()
         {

@@ -32,15 +32,10 @@ namespace SoftTradePlusStore.Controls
             var dataManager = DataManager.GetInstance();
 
             StatusComboBox.ItemsSource = GetStatuses();
-            StatusComboBox.SelectedIndex = 0;
 
             ManagerComboBox.ItemsSource = dataManager.GetManagers();
-            if (ManagerComboBox.Items.Count != 0)
-                ManagerComboBox.SelectedIndex = 0;
 
             IndividualComboBox.ItemsSource = dataManager.GetIndividuals();
-            if (IndividualComboBox.Items.Count != 0)
-                IndividualComboBox.SelectedIndex = 0;
 
             ProductsComboBox.ItemsSource = dataManager.GetProducts();
             if (ProductsComboBox.Items.Count != 0)
@@ -64,14 +59,19 @@ namespace SoftTradePlusStore.Controls
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var dataBase = DataManager.GetInstance();
+            var button = sender as DefaultButton;
+            var client = button?.DataContext as Client;
+            var selectedProduct = (Product)ProductsComboBox.SelectedItem;
+            var products = client?.Products.Where(x => x.Name == selectedProduct.Name).ToList();
 
-            var boughtProduct = new BoughtProduct( (Product) ((Product)ProductsComboBox.SelectedItem).Clone());
-            boughtProduct.ActivationDate = boughtProduct.PurchaseDate;
-            var viewModel = (Window.GetWindow(App.Current.MainWindow) as MainWindow).ViewModel;
+            if (products == null)
+                return;
 
-            ((Client)viewModel.SelectedItem).Products.Add(boughtProduct);
-            dataBase.SaveChanges();//TODO:Save after click
+            var latestActivationDate = products.Count == 0 ? DateTime.Now : products.Max(y => y.EndActivationDate);
+            var boughtProduct = new BoughtProduct((Product)((Product)ProductsComboBox.SelectedItem).Clone(), latestActivationDate);
+
+            var viewModel = (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.ViewModel;
+            ((Client)viewModel?.SelectedItem).Products.Add(boughtProduct);
         }
     }
 }

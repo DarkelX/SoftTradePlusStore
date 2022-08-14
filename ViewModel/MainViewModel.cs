@@ -18,6 +18,7 @@ namespace SoftTradePlusStore.ViewModel
     {
         public ObservableCollection<object> Items { get; }
         private IHaveIdName selectedItem;
+        private DataManager.Models currentModel;
         public bool IsItemSelected => SelectedItem != null;
 
         public IHaveIdName SelectedItem 
@@ -40,6 +41,7 @@ namespace SoftTradePlusStore.ViewModel
 
         internal void Load(DataManager.Models model)
         {
+            currentModel = model;
             Items.Clear();
 
             var items = UpdateModelList(model);
@@ -81,12 +83,6 @@ namespace SoftTradePlusStore.ViewModel
             }
         }
 
-
-
-
-
-
-
         private ObservableCollection<IHaveIdName> UpdateModelList(DataManager.Models models)
         {
             var dataBase = DataManager.GetInstance();
@@ -102,6 +98,27 @@ namespace SoftTradePlusStore.ViewModel
             }
         }
 
-        
+        private List<IHaveIdName> GetItems()
+        {
+            var items = new List<IHaveIdName>();
+
+            foreach(var item in Items)
+                items.Add(item as IHaveIdName);
+
+            return items;
+        }
+
+        internal void Refresh()
+        {
+            var selectedItemId = selectedItem.Id;
+            Load(currentModel);
+            SelectedItem = GetItems().FirstOrDefault(x => x.Id == selectedItemId);
+        }
+
+        internal void Reload()
+        {
+            DataManager.GetInstance().Dispose();
+            Refresh();
+        }
     }
 }

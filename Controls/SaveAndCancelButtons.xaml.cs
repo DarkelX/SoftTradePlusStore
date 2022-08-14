@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace SoftTradePlusStore.Controls
 {
-    /// <summary>
-    /// Interaction logic for SaveAndCancelButtons.xaml
-    /// </summary>
     public partial class SaveAndCancelButtons : UserControl
     {
         public SaveAndCancelButtons()
@@ -29,8 +26,11 @@ namespace SoftTradePlusStore.Controls
         {
             var dataBase = DataManager.GetInstance();
 
-            var viewModel = (Window.GetWindow(App.Current.MainWindow) as MainWindow).ViewModel; //TODO:Refactor
-            var selectedItem = viewModel.SelectedItem;
+            var viewModel = (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.ViewModel;
+            var selectedItem = viewModel?.SelectedItem;
+
+            if (viewModel == null || selectedItem == null) return;
+
             if (selectedItem.Id > 0)//TODO:Refactor
             {
                 dataBase.SaveChanges();
@@ -38,16 +38,16 @@ namespace SoftTradePlusStore.Controls
             else
             {
                 dataBase.CreateItem(selectedItem);
-                viewModel.Items.Remove(viewModel.SelectedItem);//TODO:Refactor
-                viewModel.Items.Add(selectedItem);
+                viewModel.Refresh();
             }
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = (Window.GetWindow(App.Current.MainWindow) as MainWindow).ViewModel;
-            if (viewModel.SelectedItem.Id == -1)
-                viewModel.Items.Remove(viewModel.SelectedItem);
+            var mainWindow = Window.GetWindow(App.Current.MainWindow) as MainWindow;
+            var viewModel = mainWindow?.ViewModel;
+            viewModel?.Reload();
+            mainWindow?.UpdateEditor();
         }
     }
 }

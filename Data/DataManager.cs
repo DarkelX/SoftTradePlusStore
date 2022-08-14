@@ -147,6 +147,12 @@ namespace SoftTradePlusStore.Data
             }
         }
 
+        public new void Dispose()
+        {
+            base.Dispose();
+            instance = null;
+        }
+
         
     }
 }

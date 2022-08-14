@@ -42,27 +42,19 @@ namespace SoftTradePlusStore
 
         private void ComboBox_Model_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var combobox = (ComboBox)sender;
-            var selectedItem = combobox.SelectedItem.ToString();
+            var selectedItem = ModelComboBox.SelectedItem.ToString();
 
             ViewModel.Load(Enum.Parse<DataManager.Models>(selectedItem));
 
-            Editor.Children.Clear();
-            Editor.Children.Add(UpdateEditor(Enum.Parse<Models>(selectedItem)));
-            UpdateEditorVisibility();
-
-            UpdateSortByBlockVisible(Enum.Parse<Models>(selectedItem));
-
-            SortByComboBox.SelectedIndex = 0;
+            UpdateEditor();
         }
 
         private void ModelList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var modelList = (ListView)sender;
             var editControl = (UserControl)Editor.Children[0];
 
             UpdateEditorVisibility();
-            editControl.DataContext = modelList.SelectedItem;
+            editControl.DataContext = ItemsList.SelectedItem;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
