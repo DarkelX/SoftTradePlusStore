@@ -59,8 +59,8 @@ namespace SoftTradePlusStore
 
         public void UpdateEditor()
         {
-            var selectedItem = ModelComboBox.SelectedItem.ToString();
-            var modelEnum = Enum.Parse<Models>(selectedItem);
+            var selectedModel = ModelComboBox.SelectedItem.ToString();
+            var modelEnum = Enum.Parse<Models>(selectedModel);
 
             Editor.Children.Clear();
             Editor.Children.Add(GetEditor(modelEnum));

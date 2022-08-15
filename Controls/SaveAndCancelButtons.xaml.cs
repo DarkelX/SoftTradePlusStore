@@ -26,6 +26,7 @@ namespace SoftTradePlusStore.Controls
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             SaveButtonClicked?.Invoke(this, e);
+            Disable();
         }
 
         public void SaveShanges()
@@ -56,6 +57,21 @@ namespace SoftTradePlusStore.Controls
             var viewModel = mainWindow?.ViewModel;
             viewModel?.Reload();
             mainWindow?.UpdateEditor();
+            Disable();
+        }
+
+        public void CheckForEnable(object sender)
+        {
+            if (sender is not Control control)
+                return;
+
+            if (control.IsFocused || control.IsMouseCaptured)
+                IsEnabled = true;
+        }
+
+        private void Disable()
+        {
+            IsEnabled = false;
         }
     }
 }

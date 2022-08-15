@@ -17,20 +17,20 @@
     <StackPanel>
         <StackPanel Margin="5 10 0 10">
             <TextBlock Text="Name" Margin="0 0 0 5"/>
-            <TextBox x:Name="NameField" Text="{Binding Name}"/>
+            <TextBox x:Name="NameField" Text="{Binding Name}" TextChanged="NameField_TextChanged"/>
             <local:RequiredFieldText x:Name="RequiredName"/>
         </StackPanel>
 
 
         <StackPanel Orientation="Horizontal" Margin="5 10 0 10">
             <TextBlock Text="Status" Margin="0 0 5 0"/>
-            <ComboBox x:Name="StatusComboBox" SelectedValue="{Binding Status}"/>
+            <ComboBox x:Name="StatusComboBox" SelectedValue="{Binding Status}" SelectionChanged="StatusComboBox_SelectionChanged"/>
         </StackPanel>
 
         <StackPanel Margin="5 10 0 10">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Manager" Margin="0 0 5 0"/>
-                <local:ComboBoxForModel x:Name="ManagerComboBox" SelectedItem="{Binding Manager}"/>
+                <local:ComboBoxForModel x:Name="ManagerComboBox" SelectedItem="{Binding Manager}" SelectionChanged="ManagerComboBox_SelectionChanged"/>
             </StackPanel>
             
             <local:RequiredFieldText x:Name="RequiredManager"/>
@@ -39,7 +39,7 @@
         <StackPanel x:Name="IndividualPanel" Margin="5 10 0 10">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Individual" Margin="0 0 5 0"/>
-                <local:ComboBoxForModel x:Name="IndividualComboBox" SelectedItem="{Binding Individual}"/>
+                <local:ComboBoxForModel x:Name="IndividualComboBox" SelectedItem="{Binding Individual}" SelectionChanged="IndividualComboBox_SelectionChanged"/>
             </StackPanel>
             
             <local:RequiredFieldText x:Name="RequiredIndividual"/>
@@ -70,7 +70,9 @@
             </local:HorizontalStretchListView>
         </Grid>
 
-        <local:SaveAndCancelButtons SaveButtonClicked="SaveAndCancelButtons_SaveButtonClicked"/>
+        <local:SaveAndCancelButtons x:Name="SaveCancelButtons"
+                                    SaveButtonClicked="SaveAndCancelButtons_SaveButtonClicked"
+                                    IsEnabled="false"/>
 
     </StackPanel>
 </UserControl>

@@ -81,6 +81,7 @@ namespace SoftTradePlusStore.ViewModel
 
             if(managers.Count > 0)
                 individual.Manager = managers[0];
+
             return individual;
         }
         private Entity CreateEntity()

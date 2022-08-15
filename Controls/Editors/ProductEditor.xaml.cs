@@ -33,10 +33,8 @@ namespace SoftTradePlusStore.Controls
         private void ProductEditor_Loaded(object sender, RoutedEventArgs e)
         {
             TypeComboBox.ItemsSource = GetTypes();
-            TypeComboBox.SelectedIndex = 0;
 
             TermComboBox.ItemsSource = GetTerms();
-            TermComboBox.SelectedIndex = 0;
         }
 
         private static List<Product.ProductType> GetTypes()
@@ -57,6 +55,8 @@ namespace SoftTradePlusStore.Controls
 
             var productType = Enum.Parse<Product.ProductType>(comboBox.SelectedValue.ToString());
             TermBlock.Visibility = productType == Product.ProductType.Subscription ? Visibility.Visible : Visibility.Collapsed;
+
+            SaveCancelButtons.CheckForEnable(sender);
         }
 
         private void ShowHideClientsButton_Click(object sender, RoutedEventArgs e)
@@ -90,6 +90,7 @@ namespace SoftTradePlusStore.Controls
                 ClientsWhoBoughtItem.Items.Add(client);
 
             ClientsWhoBoughtItem.Visibility = Visibility.Visible;
+            ShowHideClientsButton.Content = "Hide";
             ClientsWhoBoughtItem.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
@@ -172,7 +173,17 @@ namespace SoftTradePlusStore.Controls
 
         private void PriceField_TextChanged(object sender, TextChangedEventArgs e)
         {
+            SaveCancelButtons.CheckForEnable(sender);
+        }
 
+        private void NameField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SaveCancelButtons.CheckForEnable(sender);
+        }
+
+        private void TermComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveCancelButtons.CheckForEnable(sender);
         }
     }
 }

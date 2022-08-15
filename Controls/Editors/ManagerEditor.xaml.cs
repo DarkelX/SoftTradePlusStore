@@ -39,5 +39,10 @@ namespace SoftTradePlusStore.Controls
                 saveAndCancelButtons.SaveShanges();
             }
         }
+
+        private void NameField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SaveCancelButtons.CheckForEnable(sender);
+        }
     }
 }

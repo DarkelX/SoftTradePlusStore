@@ -10,7 +10,7 @@
     <StackPanel>
         <StackPanel Margin="5 10 0 10">
             <TextBlock Text="Name" Margin="0 0 0 5"/>
-            <TextBox x:Name="NameField" Text="{Binding Name}"/>
+            <TextBox x:Name="NameField" Text="{Binding Name}" TextChanged="NameField_TextChanged"/>
             <local:RequiredFieldText x:Name="RequiredName"/>
         </StackPanel>
 
@@ -28,7 +28,7 @@
 
         <StackPanel x:Name="TermBlock" Orientation="Horizontal" Margin="5 10 0 10">
             <TextBlock Text="Term" Margin="0 0 5 0"/>
-            <ComboBox x:Name="TermComboBox" SelectedValue="{Binding Term}"/>
+            <ComboBox x:Name="TermComboBox" SelectedValue="{Binding Term}" SelectionChanged="TermComboBox_SelectionChanged"/>
         </StackPanel>
 
         <local:DefaultButton x:Name="ShowHideClientsButton" Content="Show" Click="ShowHideClientsButton_Click"/>
@@ -42,7 +42,9 @@
             </ListView.ItemTemplate>
         </local:HorizontalStretchListView>
 
-        <local:SaveAndCancelButtons SaveButtonClicked="SaveAndCancelButtons_SaveButtonClicked"/>
+        <local:SaveAndCancelButtons x:Name="SaveCancelButtons"
+                                    SaveButtonClicked="SaveAndCancelButtons_SaveButtonClicked"
+                                    IsEnabled="false"/>
 
     </StackPanel>
 </UserControl>

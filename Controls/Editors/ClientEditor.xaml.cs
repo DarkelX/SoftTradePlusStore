@@ -74,6 +74,8 @@ namespace SoftTradePlusStore.Controls
 
             var viewModel = (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.ViewModel;
             ((Client)viewModel?.SelectedItem).Products.Add(boughtProduct);
+
+            SaveCancelButtons.CheckForEnable(sender);
         }
 
         private void ProductList_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -115,7 +117,28 @@ namespace SoftTradePlusStore.Controls
                 RequiredManager.Hide();
                 RequiredIndividual.Hide();
                 saveAndCancelButtons.SaveShanges();
+                SaveCancelButtons.IsEnabled = false;
             }
+        }
+
+        private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveCancelButtons.CheckForEnable(sender);
+        }
+
+        private void NameField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SaveCancelButtons.CheckForEnable(sender);
+        }
+
+        private void ManagerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveCancelButtons.CheckForEnable(sender);
+        }
+
+        private void IndividualComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveCancelButtons.CheckForEnable(sender);
         }
     }
 }

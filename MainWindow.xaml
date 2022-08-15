@@ -44,24 +44,19 @@
                         Click="RemoveButton_Click"/>
             </StackPanel>
 
-            <ListView x:Name="ItemsList" Grid.Row="1" Background="#CCCCCC" SelectionChanged="ModelList_SelectionChanged"
-                      ItemsSource="{Binding ViewModel.Items}"
-                      SelectedItem="{Binding ViewModel.SelectedItem}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
+            <control:HorizontalStretchListView x:Name="ItemsList" Grid.Row="1" Background="#CCCCCC"
+                                               SelectionChanged="ModelList_SelectionChanged"
+                                               ItemsSource="{Binding ViewModel.Items}"
+                                               SelectedItem="{Binding ViewModel.SelectedItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <control:Item/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </control:HorizontalStretchListView>
         </Grid>
 
-        <Grid x:Name="Editor" Grid.Column="1" Grid.Row="1">
-
-        </Grid>
+        <Grid x:Name="Editor" Grid.Column="1" Grid.Row="1"/>
+        
     </Grid>
 </Window>
