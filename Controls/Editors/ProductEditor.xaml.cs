@@ -63,16 +63,11 @@ namespace SoftTradePlusStore.Controls
         {
             if(ClientsWhoBoughtItem.Items.Count > 0)
             {
-                if(ClientsWhoBoughtItem.Visibility == Visibility.Collapsed)
-                {
-                    ClientsWhoBoughtItem.Visibility = Visibility.Visible;
-                    ShowHideClientsButton.Content = "Hide";
-                }
+                if (ClientsWhoBoughtItem.Visibility == Visibility.Collapsed)
+                    ShowClientsWhoBoughtItem();
                 else
-                {
-                    ClientsWhoBoughtItem.Visibility = Visibility.Collapsed;
-                    ShowHideClientsButton.Content = "Show";
-                }
+                    HideClientsWhoBoughtItem();
+
                 return;
             }
 
@@ -184,6 +179,29 @@ namespace SoftTradePlusStore.Controls
         private void TermComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SaveCancelButtons.CheckForEnable(sender);
+        }
+
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!IsLoaded)
+                return;
+            RequiredName.Hide();
+            RequiredPrice.Hide();
+            SaveCancelButtons.HideSuccessfullyText();
+            ClientsWhoBoughtItem.Items.Clear();
+            HideClientsWhoBoughtItem();
+        }
+
+        private void ShowClientsWhoBoughtItem()
+        {
+            ClientsWhoBoughtItem.Visibility = Visibility.Visible;
+            ShowHideClientsButton.Content = "Hide";
+        }
+
+        private void HideClientsWhoBoughtItem()
+        {
+            ClientsWhoBoughtItem.Visibility = Visibility.Collapsed;
+            ShowHideClientsButton.Content = "Show";
         }
     }
 }

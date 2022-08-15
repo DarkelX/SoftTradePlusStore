@@ -146,7 +146,7 @@ namespace SoftTradePlusStore.ViewModel
 
         internal void Refresh()
         {
-            var selectedItemId = selectedItem.Id;
+            var selectedItemId = selectedItem?.Id;
             Load(currentModel);
             SelectedItem = GetItems().FirstOrDefault(x => x.Id == selectedItemId);
         }

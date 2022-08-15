@@ -44,5 +44,13 @@ namespace SoftTradePlusStore.Controls
         {
             SaveCancelButtons.CheckForEnable(sender);
         }
+
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!IsLoaded)
+                return;
+            RequiredName.Hide();
+            SaveCancelButtons.HideSuccessfullyText();
+        }
     }
 }

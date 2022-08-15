@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SoftTradePlusStore.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContextChanged="UserControl_DataContextChanged">
     
     <StackPanel>
         <StackPanel Margin="5 10 0 10">
@@ -31,7 +32,7 @@
             <ComboBox x:Name="TermComboBox" SelectedValue="{Binding Term}" SelectionChanged="TermComboBox_SelectionChanged"/>
         </StackPanel>
 
-        <local:DefaultButton x:Name="ShowHideClientsButton" Content="Show" Click="ShowHideClientsButton_Click"/>
+        <local:DefaultButton x:Name="ShowHideClientsButton" Click="ShowHideClientsButton_Click"/>
 
         <local:HorizontalStretchListView x:Name="ClientsWhoBoughtItem" Visibility="Collapsed" Margin="0 5 0 0"
                                          DataContextChanged="ClientsWhoBoughtItem_DataContextChanged">

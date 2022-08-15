@@ -26,7 +26,6 @@ namespace SoftTradePlusStore.Controls
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             SaveButtonClicked?.Invoke(this, e);
-            Disable();
         }
 
         public void SaveShanges()
@@ -49,6 +48,7 @@ namespace SoftTradePlusStore.Controls
             }
 
             SavedSuccessfullyText.Visibility = Visibility.Visible;
+            Disable();
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
@@ -72,6 +72,11 @@ namespace SoftTradePlusStore.Controls
         private void Disable()
         {
             IsEnabled = false;
+        }
+
+        public void HideSuccessfullyText()
+        {
+            SavedSuccessfullyText.Visibility = Visibility.Collapsed;
         }
     }
 }
