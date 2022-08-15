@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,22 +50,47 @@ namespace SoftTradePlusStore.Controls
 
         private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var comboBox = (ComboBox)sender; //TODO:Refactor
-            if(comboBox.SelectedValue == null) return;
+            if (sender is not ComboBox comboBox)
+                return;
+
+            if (comboBox.SelectedValue == null) return;
+
             var productType = Enum.Parse<Product.ProductType>(comboBox.SelectedValue.ToString());
             TermBlock.Visibility = productType == Product.ProductType.Subscription ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void ShowHideClientsButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = (DefaultButton)sender;
-            var thisProduct = (Product)button.DataContext;
+            if(ClientsWhoBoughtItem.Items.Count > 0)
+            {
+                if(ClientsWhoBoughtItem.Visibility == Visibility.Collapsed)
+                {
+                    ClientsWhoBoughtItem.Visibility = Visibility.Visible;
+                    ShowHideClientsButton.Content = "Hide";
+                }
+                else
+                {
+                    ClientsWhoBoughtItem.Visibility = Visibility.Collapsed;
+                    ShowHideClientsButton.Content = "Show";
+                }
+                return;
+            }
+
+
+            if (sender is not Button button)
+                return;
+
+            if (button.DataContext is not Product thisProduct)
+                return;
+
             var nameOfProduct = thisProduct.Name;
             var clients = GetClientsWhoBoughtItem(nameOfProduct);
-            ClientsWhoBoughtItem.Items.Clear();//TODO:Refactor
 
             foreach (var client in clients)
                 ClientsWhoBoughtItem.Items.Add(client);
+
+            ClientsWhoBoughtItem.Visibility = Visibility.Visible;
+            ClientsWhoBoughtItem.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
         private List<ClientsWithCount> GetClientsWhoBoughtItem(string name)//TODO:Refactor
@@ -73,9 +99,9 @@ namespace SoftTradePlusStore.Controls
 
             var clients = new List<ClientsWithCount>();
 
-            foreach(var client in dataBase.Individuals)
+            foreach (var client in dataBase.Individuals)
             {
-                foreach(var product in client.Products)
+                foreach (var product in client.Products)
                 {
                     if (product.Name == name)
                     {
@@ -85,7 +111,7 @@ namespace SoftTradePlusStore.Controls
                         else
                             clients.Add(new ClientsWithCount(client));
                     }
-                } 
+                }
             }
 
             foreach (var client in dataBase.Entities)
@@ -119,15 +145,24 @@ namespace SoftTradePlusStore.Controls
             if (sender is not SaveAndCancelButtons saveAndCancelButtons)
                 return;
 
-            if(string.IsNullOrEmpty(NameField.Text) || string.IsNullOrEmpty(PriceField.Text))
-            {
-                if (string.IsNullOrEmpty(NameField.Text))
-                    RequiredName.Show();
+            var isRequiredField = false;
 
-                if (string.IsNullOrEmpty(PriceField.Text))
-                    RequiredPrice.Show();
+
+            if (string.IsNullOrEmpty(NameField.Text))
+            {
+                RequiredName.Show();
+                isRequiredField = true;
             }
-            else
+            
+
+            if (string.IsNullOrEmpty(PriceField.Text))
+            {
+                RequiredPrice.Show();
+                isRequiredField = true;
+            }
+                
+
+            if(!isRequiredField)
             {
                 RequiredName.Hide();
                 RequiredPrice.Hide();

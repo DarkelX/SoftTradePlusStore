@@ -31,20 +31,16 @@
             <ComboBox x:Name="TermComboBox" SelectedValue="{Binding Term}"/>
         </StackPanel>
 
-        <local:DefaultButton x:Name="ShowHideClientsButton" Click="ShowHideClientsButton_Click"/>
-        
-        <ListView x:Name="ClientsWhoBoughtItem" DataContextChanged="ClientsWhoBoughtItem_DataContextChanged">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
+        <local:DefaultButton x:Name="ShowHideClientsButton" Content="Show" Click="ShowHideClientsButton_Click"/>
+
+        <local:HorizontalStretchListView x:Name="ClientsWhoBoughtItem" Visibility="Collapsed" Margin="0 5 0 0"
+                                         DataContextChanged="ClientsWhoBoughtItem_DataContextChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <local:Item/>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </local:HorizontalStretchListView>
 
         <local:SaveAndCancelButtons SaveButtonClicked="SaveAndCancelButtons_SaveButtonClicked"/>
 

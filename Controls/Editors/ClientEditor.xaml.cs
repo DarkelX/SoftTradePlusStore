@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,8 @@ namespace SoftTradePlusStore.Controls
                 AddButton.IsEnabled = true;
             }
             else AddButton.IsEnabled = false;
+
+            ProductList.Items.SortDescriptions.Add(new SortDescription("Products.EndActivationDate", ListSortDirection.Ascending));
         }
 
         private static List<Client.ClientStatus> GetStatuses()
@@ -86,11 +89,31 @@ namespace SoftTradePlusStore.Controls
             if (sender is not SaveAndCancelButtons saveAndCancelButtons)
                 return;
 
+            var isRequiredField = false;
+
             if (string.IsNullOrEmpty(NameField.Text))
+            {
                 RequiredName.Show();
-            else
+                isRequiredField = true;
+            }
+
+            if (ManagerComboBox.SelectedItem == null)
+            {
+                RequiredManager.Show();
+                isRequiredField = true;
+            }
+
+            if(IndividualPanel.IsVisible && IndividualComboBox.SelectedItem == null)
+            {
+                RequiredIndividual.Show();
+                isRequiredField = true;
+            }
+            
+            if(!isRequiredField)
             {
                 RequiredName.Hide();
+                RequiredManager.Hide();
+                RequiredIndividual.Hide();
                 saveAndCancelButtons.SaveShanges();
             }
         }

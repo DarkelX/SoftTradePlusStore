@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,14 +64,48 @@ namespace SoftTradePlusStore.ViewModel
         {
             switch (model)
             {
-                case DataManager.Models.Individual: return new Individual(true);
-                case DataManager.Models.Entity: return new Entity(true);
-                case DataManager.Models.Manager: return new Manager(true);
-                case DataManager.Models.Product: return new Product(true);
+                case DataManager.Models.Individual: return CreateIndividual();
+                case DataManager.Models.Entity: return CreateEntity();
+                case DataManager.Models.Manager: return CreateManager();
+                case DataManager.Models.Product: return CreateProduct();
                 case DataManager.Models.BoughtProduct: return new BoughtProduct(true);
                 default: throw new Exception();
             }
         }
+
+        private Individual CreateIndividual()
+        {
+            var dataBase = DataManager.GetInstance();
+            var managers = dataBase.GetManagers();
+            var individual = new Individual(true);
+
+            if(managers.Count > 0)
+                individual.Manager = managers[0];
+            return individual;
+        }
+        private Entity CreateEntity()
+        {
+            var dataBase = DataManager.GetInstance();
+            var managers = dataBase.GetManagers();
+            var individuals = dataBase.GetIndividuals();
+            var entity = new Entity(true);
+
+            if(managers.Count > 0)
+                entity.Manager = managers[0];
+            if(individuals.Count > 0)
+                entity.Individual = individuals[0];
+
+            return entity;
+        }
+        private Manager CreateManager()
+        {
+            return new Manager(true);
+        }
+        private Product CreateProduct()
+        {
+            return new Product(true);
+        }
+
 
         public void DeleteItem()
         {
