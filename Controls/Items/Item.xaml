@@ -26,11 +26,11 @@
             <TextBlock x:Name="IndividualText" Text="{Binding Individual.Name}"/>
         </StackPanel>
     </StackPanel>
-    <StackPanel x:Name="IdBlock" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+    <StackPanel x:Name="IdBlock" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
         <TextBlock Text="Id:"/>
         <TextBlock Text="{Binding Id}"/>
     </StackPanel>
-    <StackPanel x:Name="CountBlock" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+    <StackPanel x:Name="CountBlock" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
         <TextBlock Text="X "/>
         <TextBlock x:Name="CountText" Text="{Binding Count}"/>
     </StackPanel>

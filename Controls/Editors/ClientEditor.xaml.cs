@@ -76,6 +76,7 @@ namespace SoftTradePlusStore.Controls
             ((Client)viewModel?.SelectedItem).Products.Add(boughtProduct);
 
             SaveCancelButtons.CheckForEnable(sender);
+            ProductList.Visibility = Visibility.Visible;
         }
 
         private void ProductList_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -149,6 +150,18 @@ namespace SoftTradePlusStore.Controls
             RequiredManager.Hide();
             RequiredIndividual.Hide();
             SaveCancelButtons.HideSuccessfullyText();
+        }
+
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button)
+                return;
+
+            if (button.DataContext is not Client client)
+                return;
+
+            client.Products.Remove((BoughtProduct)ProductList.SelectedItem);
+            SaveCancelButtons.CheckForEnable(sender);
         }
     }
 }
